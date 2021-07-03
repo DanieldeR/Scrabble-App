@@ -15,11 +15,13 @@ class ScoreColumn extends StatefulWidget {
 
 class _ScoreColumnState extends State<ScoreColumn> {
   int _enteredPoints = 0;
+  final _formKey = GlobalKey<FormState>();
 
   void updateScore(BuildContext context) {
     if (_enteredPoints > 0) {
       Provider.of<Game>(context, listen: false)
           .addPoints(_enteredPoints, widget.playerId);
+      _formKey.currentState.reset();
       _enteredPoints = 0;
     }
   }
@@ -28,7 +30,6 @@ class _ScoreColumnState extends State<ScoreColumn> {
   Widget build(BuildContext context) {
     final game = Provider.of<Game>(context);
     final player = game.getPlayer(widget.playerId);
-    final _formKey = GlobalKey<FormState>();
     final _points = player.getPlayerPoints();
 
     print(_points);
@@ -73,6 +74,7 @@ class _ScoreColumnState extends State<ScoreColumn> {
                       decoration: InputDecoration(labelText: ''),
                       onChanged: (value) => _enteredPoints = int.parse(value),
                       onFieldSubmitted: (_) => updateScore(context),
+                      keyboardType: TextInputType.number,
                     ),
                   ),
                   Padding(

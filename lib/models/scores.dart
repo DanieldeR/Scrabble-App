@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -48,20 +50,33 @@ class Game with ChangeNotifier {
   }
 
   void addPoints(int point, String id) {
-    final player = players.firstWhere((prod) => prod.name == id);
-    final playerIndex = players.indexWhere((prod) => prod.name == id);
+    final Player player = players.firstWhere((prod) => prod.name == id);
+    final int playerIndex = players.indexWhere((prod) => prod.name == id);
 
-    List<int> currentPoints = player.getPlayerPoints().toList();
-    currentPoints.add(point);
+    // Ensure that no player can enter too many points.
+    final int currentNumberOfPoints = player.points.length;
+    final minNumPoints = players
+        .reduce((curr, next) =>
+            curr.points.length < next.points.length ? curr : next)
+        .points
+        .length;
 
-    final _newPlayer = new Player(
-      name: player.name,
-      points: currentPoints,
-    );
+    if (currentNumberOfPoints + 1 == minNumPoints + 1) {
+      List<int> currentPoints = player.getPlayerPoints().toList();
+      currentPoints.add(point);
 
-    players[playerIndex] = _newPlayer;
+      final _newPlayer = new Player(
+        name: player.name,
+        points: currentPoints,
+      );
 
-    notifyListeners();
+      players[playerIndex] = _newPlayer;
+
+      notifyListeners();
+    } else {
+      //TODO: Error handling and show a dialog to the user.
+      return;
+    }
   }
 
   List<int> getPoints(String id) {

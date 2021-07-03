@@ -11,16 +11,16 @@ class Dictionary extends StatefulWidget {
 
 class _DictionaryState extends State<Dictionary> {
   String _query = 'search';
+  final _formKey = GlobalKey<FormState>();
 
   Future<void> _getDefinitions(BuildContext context, String word) async {
     Provider.of<Definitions>(context, listen: false).fetchDefitions(word);
+    _formKey.currentState.reset();
   }
 
   @override
   Widget build(BuildContext context) {
     final definitions = Provider.of<Definitions>(context).items;
-
-    final _formKey = GlobalKey<FormState>();
 
     return Padding(
       padding: const EdgeInsets.all(15.0),
