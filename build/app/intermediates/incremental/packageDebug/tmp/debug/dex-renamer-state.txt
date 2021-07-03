@@ -1,0 +1,4 @@
+#Sat Jul 03 17:09:03 EDT 2021
+base.0=/Users/danielder/Documents/Projects - Personal/Scrabble Tools/scrabble_app/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
