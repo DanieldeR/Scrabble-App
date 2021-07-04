@@ -61,9 +61,9 @@ class Game with ChangeNotifier {
         .points
         .length;
 
-    if (currentNumberOfPoints + 1 == minNumPoints + 1) {
-      List<int> currentPoints = player.getPlayerPoints().toList();
-      currentPoints.add(point);
+    if (currentNumberOfPoints == minNumPoints) {
+      List<int> currentPoints = player.getPlayerPoints().toList()..add(point);
+      // currentPoints.add(point);
 
       final _newPlayer = new Player(
         name: player.name,
